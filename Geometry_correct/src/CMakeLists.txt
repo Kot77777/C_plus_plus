@@ -1,0 +1,1 @@
+add_library(geometry STATIC Determinant.cpp Lines_intersection.cpp Lines_intersection.h Segments_intersection.cpp Vector.cpp Determinant.h Intersection.h Line.h Point.h Segment.h Segments_intersection.h Vector.h)

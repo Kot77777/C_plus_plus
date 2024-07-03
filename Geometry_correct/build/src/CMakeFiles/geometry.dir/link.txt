@@ -1,0 +1,2 @@
+/usr/bin/ar qc libgeometry.a CMakeFiles/geometry.dir/Determinant.cpp.o CMakeFiles/geometry.dir/Lines_intersection.cpp.o CMakeFiles/geometry.dir/Segments_intersection.cpp.o CMakeFiles/geometry.dir/Vector.cpp.o
+/usr/bin/ranlib libgeometry.a
