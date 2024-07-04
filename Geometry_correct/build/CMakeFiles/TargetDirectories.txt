@@ -1,6 +1,0 @@
-/home/kostya/Repositories/C_plus_plus/Geometry_correct/build/CMakeFiles/main.dir
-/home/kostya/Repositories/C_plus_plus/Geometry_correct/build/CMakeFiles/edit_cache.dir
-/home/kostya/Repositories/C_plus_plus/Geometry_correct/build/CMakeFiles/rebuild_cache.dir
-/home/kostya/Repositories/C_plus_plus/Geometry_correct/build/src/CMakeFiles/geometry.dir
-/home/kostya/Repositories/C_plus_plus/Geometry_correct/build/src/CMakeFiles/edit_cache.dir
-/home/kostya/Repositories/C_plus_plus/Geometry_correct/build/src/CMakeFiles/rebuild_cache.dir
