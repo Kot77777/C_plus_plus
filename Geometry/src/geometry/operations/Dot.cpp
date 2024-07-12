@@ -1,4 +1,4 @@
-#include "Scalar_product.h"
+#include "Dot.h"
 
 double scalar_product(const Vector& r1,
 		      const Vector& r2)
