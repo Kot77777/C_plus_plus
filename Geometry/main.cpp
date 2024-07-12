@@ -1,23 +1,15 @@
 #include <iostream>
-#include "Geometry.hpp"
+#include "Geometry.h"
 
 int main()
 {
-	Point A, B, C, O;
+	const Point point{2, 2};
 	
-	std::cout << "Введите координаты вершин треугольника" << std::endl;
-	std::cin >> A.x >> A.y >> B.x >> B.y >> C.x >> C.y;
+	const Point a{1, 1};
+	const Point b{1, 5};
+	const Point c{4, 1};
 	
-	std::cout << "Введите координаты эксперементальной точки" << std::endl;
-	std::cin >> O.x >> O.y;
-	
-	if (Geometry(O, A, B, C))
-	{
-		std::cout << "Точка принадлежит треугольнику" << std::endl;
-	}
-	
-	else
-	{
-		std::cout << "Точка НЕ принадлежит треугольнику" << std::endl;
-	}
+	const Triangle triangle{a, b, c};
+
+	std::cout << point_in_triangle(point, triangle) << std::endl;
 }

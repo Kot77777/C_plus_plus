@@ -1,6 +1,6 @@
 #include <iostream>
-#include "src/Lines_intersection.h"
-#include "src/Segments_intersection.h"
+#include "geometry/intersections/Lines_intersection.h"
+#include "geometry/intersections/Segments_intersection.h"
 
 int main()
 {
