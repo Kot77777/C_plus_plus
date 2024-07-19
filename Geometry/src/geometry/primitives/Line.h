@@ -3,10 +3,11 @@
 #include "Point.h"
 #include "Vector.h"
 
+template<std::size_t n>
 struct Line
 {
-	Point r0;
-	Vector a;
+	Point<n> r0;
+	Vector<n> a;
 };
 
 #endif

@@ -2,10 +2,11 @@
 #define GEOMETRY_SEGMENT_H
 #include "Point.h"
 
+template<std::size_t n>
 struct Segment
 {
-	Point A;
-	Point B;
+	Point<n> A;
+	Point<n> B;
 };
 
 #endif

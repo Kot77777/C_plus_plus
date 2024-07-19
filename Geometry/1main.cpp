@@ -4,17 +4,17 @@
 
 int main()
 {
-	const Point r0_1{2, 2};
-	const Vector a1{4, 4};
+	const Point<2> r0_1{2, 2};
+	const Vector<2> a1{4, 4};
 
-	const Point r0_2{1, 1};
-	const Vector a2{2, 1};
+	const Point<2> r0_2{1, 1};
+	const Vector<2> a2{2, 1};
 
-	const Line l1{r0_1, a1};
-	const Line l2{r0_2, a2};
+	const Line<2> l1{r0_1, a1};
+	const Line<2> l2{r0_2, a2};
 
-	const Segment s1{{1, 1}, {4, 4}};
-	const Segment s2{{0, 0}, {5, 0}};
+	const Segment<2> s1{{1, 1}, {4, 4}};
+	const Segment<2> s2{{0, 0}, {5, 0}};
 
 	const auto O = lines_intersection(l1, l2);
 

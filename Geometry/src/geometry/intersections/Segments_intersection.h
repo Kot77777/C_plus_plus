@@ -3,7 +3,8 @@
 #include "geometry/intersections/Lines_intersection.h"
 #include "geometry/primitives/Segment.h"
 
-std::optional<Intersection> segments_intersection(const Segment& s1, const Segment& s2);
+template<std::size_t n>
+std::optional<Intersection> segments_intersection(const Segment<n>& s1, const Segment<n>& s2);
 
 #endif
 

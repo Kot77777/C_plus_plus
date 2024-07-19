@@ -1,20 +1,16 @@
 #include "Point_in_triangle.h"
 
-Vector operator-(const Point& point1, const Point& point2)
+template<std::size_t n>
+bool point_in_triangle(const Point<n>& point, const Triangle<n>& triangle)
 {
-	return {point1.x - point2.x, point1.y - point2.y};
-}
+	const Vector<n> d1 = triangle.b - triangle.a;
+	const Vector<n> d2 = triangle.c - triangle.a;
 
-bool point_in_triangle(const Point& point, const Triangle& triangle)
-{
-	const Vector d1 = triangle.b - triangle.a;
-	const Vector d2 = triangle.c - triangle.a;
+	const Vector<n> r = point - triangle.a;
 
-	const Vector r = point - triangle.a;
-
-	const float det = determinant(d1, d2);
-	const float det1 = determinant(r, d2);
-	const float det2 = determinant(d1, r);
+	const float det = det(d1, d2);
+	const float det1 = det(r, d2);
+	const float det2 = det(d1, r);
 
 	const float x1 = det1 / det;
 	const float x2 = det2 / det;
