@@ -7,6 +7,12 @@ double Vector<n>::operator[](const std::size_t index) const
 }
 
 template<std::size_t n>
+double& Vector<n>::operator[](const std::size_t index)
+{
+	return data_[index];
+}
+
+template<std::size_t n>
 const std::array<double, n>& Vector<n>::data() const
 {
 	return data_;
@@ -42,17 +48,6 @@ double dot(const Vector<d>& v1, const Vector<d>& v2)
 		dot += v1[i] * v2[i];
 	}
 	return dot;
-}
-
-template<std::size_t d>
-Vector<d> operator+(const Vector<d>& v1, const Vector<d>& v2) 
-{
-	Vector<d> result;
-	for (std::size_t i = 0; i < d; ++i)
-	{
-		result[i] = v1[i] + v2[i];
-	}
-	return result;
 }
 
 template<std::size_t d>
@@ -104,7 +99,7 @@ void swap(std::array<Vector<n>, n>& matrix, const std::size_t i, const std::size
 
 
 template<std::size_t d>
-double det(std::array<Vector<d>, d>& matrix)
+double determinant(std::array<Vector<d>, d>& matrix)
 {
         double det_ = 1;
         for (std::size_t i = 0; i < d; ++i)

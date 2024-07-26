@@ -1,16 +1,15 @@
 #include "Point_in_triangle.h"
 
-template<std::size_t n>
-bool point_in_triangle(const Point<n>& point, const Triangle<n>& triangle)
+bool point_in_triangle(const Point<2>& point, const Triangle<2>& triangle)
 {
-	const Vector<n> d1 = triangle.b - triangle.a;
-	const Vector<n> d2 = triangle.c - triangle.a;
+	const Vector<2> d1 = triangle.b.r0 - triangle.a.r0;
+	const Vector<2> d2 = triangle.c.r0 - triangle.a.r0;
 
-	const Vector<n> r = point - triangle.a;
+	const Vector<2> r = point.r0 - triangle.a.r0;
 
-	const float det = det(d1, d2);
-	const float det1 = det(r, d2);
-	const float det2 = det(d1, r);
+	const float det = determinant(d1, d2);
+	const float det1 = determinant(r, d2);
+	const float det2 = determinant(d1, r);
 
 	const float x1 = det1 / det;
 	const float x2 = det2 / det;
