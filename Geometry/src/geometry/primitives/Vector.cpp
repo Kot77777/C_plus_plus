@@ -6,11 +6,11 @@ double Vector<n>::operator[](const std::size_t index) const
 	return data_[index];
 }
 
-template<std::size_t n>
+/*template<std::size_t n>
 double& Vector<n>::operator[](const std::size_t index)
 {
 	return data_[index];
-}
+}*/
 
 template<std::size_t n>
 const std::array<double, n>& Vector<n>::data() const
