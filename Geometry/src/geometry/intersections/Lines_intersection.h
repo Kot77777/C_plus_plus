@@ -4,7 +4,11 @@
 #include "geometry/primitives/Line.h"
 #include "geometry/intersections/Intersection.h"
 
-std::optional<Intersection> lines_intersection(const Line<2>& l1, const Line<2>& l2)
+template <std::size_t N>
+std::optional<Intersection> lines_intersection(const Line<N>& l1, const Line<N>& l2);
+
+template <>
+inline std::optional<Intersection> lines_intersection<2>(const Line<2>& l1, const Line<2>& l2)
 {
 	const double det_ = -determinant({l1.a, l2.a});
 	if (det_ == 0)

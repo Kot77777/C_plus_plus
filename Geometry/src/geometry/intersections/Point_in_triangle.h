@@ -3,7 +3,11 @@
 #include "geometry/primitives/Triangle.h"
 #include "geometry/primitives/Vector.h"
 
-bool point_in_triangle(const Point<2>& point, const Triangle<2>& triangle)
+template <std::size_t N>
+bool point_in_triangle(const Point<N>& point, const Triangle<N>& triangle);
+
+template <>
+bool point_in_triangle<2>(const Point<2>& point, const Triangle<2>& triangle)
 {
 	const Vector<2> d1 = triangle.b.r0 - triangle.a.r0;
 	const Vector<2> d2 = triangle.c.r0 - triangle.a.r0;

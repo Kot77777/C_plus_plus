@@ -1,16 +1,16 @@
 #include "gtest/gtest.h"
-#include "geometry/primitives/Vector.h"
+#include "geometry/primitives/Matrix.h"
 
 TEST(VECTOR, CREATE_VECTOR)
 {
-	Vector<2> v1 = {{1, 2}};
-	Vector<2> v2 = {{1, 2}};
-	std::array<Vector<2>, 2> matrix = {v1, v2};
+	std::array<std::array<double, 3>, 1> matrix1 = {{{1, 2, 3}}};
+	Matrix<1, 3> matrix_1{matrix1};
 	
-	Vector<2> v1_ = {{2, 2}};
-	Vector<2> v2_ = {{1, 2}};
-	std::array<Vector<2>, 2> matrix_ = {v1_, v2_};
+	std::array<std::array<double, 3>, 3> matrix2 = {{{3, 2, 5}, {7, 8, 6}, {11, 3, 6}}};
+	Matrix<3, 3> matrix_2{matrix2};
 	
-	ASSERT_EQ(determinant(matrix), 0);
-	ASSERT_EQ(determinant(matrix_), 1);
+	Vector v1 = matrix1;
+	
+	ASSERT_EQ(determinant<3>(matrix_2), -197);
+	ASSERT_EQ(v1(0, 1), 2);
 }
