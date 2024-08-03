@@ -14,41 +14,41 @@ public:
 	double operator()(const std::size_t i, const std::size_t j) const {return matrix_[i][j];}
 	double& operator()(const std::size_t i, const std::size_t j) {return matrix_[i][j];}
 	
-	const double x(const std::size_t i) const
+	const double x() const
 	{
-		static_assert(M > 0);
-		return matrix_(i, 0);
+		static_assert(M > 0 && N == 1);
+		return matrix_[0][1];
 	}
 
-	double& x(const std::size_t i)
+	double& x()
 	{
-		static_assert(M > 0);
-                return matrix_(i, 0);
+		static_assert(M > 0 && N == 1);
+		return matrix_[0][1];
 	}
 
-	const double y(const std::size_t i) const
-        {
-                static_assert(M > 1);
-                return matrix_(i, 1);
-        }
+	const double y() const
+	{
+		static_assert(M > 1 && N == 1);
+		return matrix_[1][1];
+	}
 
-        double& y(const std::size_t i)
-        {
-                static_assert(M > 1);
-                return matrix_(i, 1);
-        }
+	double& y()
+	{
+		static_assert(M > 1 && N == 1);
+		return matrix_[1][1];
+	}
 
-	const double z(const std::size_t i) const
-        {
-                static_assert(M > 2);
-                return matrix_(i, 2);
-        }
+	const double z() const
+	{
+		static_assert(M > 2 && N == 1);
+		return matrix_[1][2];
+	}
 
-        double& z(const std::size_t i)
-        {
-                static_assert(M > 2);
-                return matrix_(i, 2);
-        }
+	double& z(const std::size_t i)
+	{
+		static_assert(M > 2 && N == 1);
+		return matrix_[1][2];
+	}
 };
 
 template <std::size_t N>
@@ -85,7 +85,7 @@ Matrix<N, M> operator-(const Matrix<N, M>& matrix_1, const Matrix<N, M>& matrix_
 }
 
 template<std::size_t N, std::size_t M>
-Matrix<N, M> operator+(const Matrix<N, M>& matrix_)
+Matrix<N, M> operator-(const Matrix<N, M>& matrix_)
 {
         Matrix<N, M> matrix;
         for (std::size_t i; i < N; ++i)
@@ -141,7 +141,7 @@ Matrix<N, M> operator*(const Matrix<N, K>& matrix_1, const Matrix<K, M>& matrix_
 }
 
 template<std::size_t N, std::size_t M>
-Matrix<M, N> transposition(const Matrix<N, M>& matrix_)
+Matrix<M, N> transposed(const Matrix<N, M>& matrix_)
 {
 	Matrix<M, N> matrix;
 	for(std::size_t i = 0; i < M; ++i)
@@ -161,28 +161,22 @@ Matrix<N-1, N-1> minor(const std::size_t i, const Matrix<N, N>& matrix)
 	Matrix<N-1, N-1> minor_;
 	for(std::size_t j = 0, z = 0; j < N; ++j)
 	{
+		bool A = false;
 		for(std::size_t k = 1; k < N; ++k)
 		{	
 			if (j != i) {minor_(z, k - 1) = matrix(j, k);}
-			else {
-			z--;
-			break;}	
+			else {A = true;}
 		}
+		if(A) {z--;}
 		z++;
 	} 
 	
 	return minor_;
 }
 
-int pow_minus1(const std::size_t i)
+inline int pow_minus1(const std::size_t i)
 {
-    int result = 1;
-    for(std::size_t j = 0; j < i; j++)
-    {
-        result *= -1;
-    }
-
-    return result;
+    return (i % 2 == 0) ? 1 : -1;
 }
 
 template<std::size_t N>
@@ -193,7 +187,6 @@ double determinant(const Matrix<N, N>& matrix)
 	for(std::size_t i = 0; i < N; ++i)
 	{
 		total += pow_minus1(i) * matrix(i, 0) * determinant(minor(i, matrix));
-
 	}
 	
 	return total;
@@ -204,10 +197,5 @@ inline double determinant<1>(const Matrix<1, 1>& matrix)
 {
 	return matrix(0, 0);
 }
-
-
-
-
-
 
 #endif
