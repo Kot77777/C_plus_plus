@@ -5,62 +5,87 @@
 template<std::size_t N, std::size_t M>
 class Matrix
 {
-	std::array<std::array<double,  M>, N> matrix_;
+	std::array<std::array<double,  M>, N> data_;
 public:
 
 	Matrix() = default;
-	Matrix(const std::array<std::array<double,  M>, N>& matrix) : matrix_(matrix){}
+	Matrix(const std::array<std::array<double,  M>, N>& matrix) : data_(matrix){}
+	Matrix(const std::array<Matrix<1, M>, N>& matrix) {
+		for (std::size_t i = 0; i < N; ++i) {
+			for (std::size_t j = 0; j < M; ++j) {
+				data_[i][j] = matrix[i](0, j);
+			}
+		}
+	}
 
-	double operator()(const std::size_t i, const std::size_t j) const {return matrix_[i][j];}
-	double& operator()(const std::size_t i, const std::size_t j) {return matrix_[i][j];}
+	double operator()(const std::size_t i, const std::size_t j) const {return data_[i][j];}
+	double& operator()(const std::size_t i, const std::size_t j) {return data_[i][j];}
+
+	std::array<double,  M> operator[](const std::size_t i) const {return data_[i];}
+	std::array<double,  M>& operator[](const std::size_t i) {return data_[i];}
 	
 	const double x() const
 	{
 		static_assert(M > 0 && N == 1);
-		return matrix_[0][1];
+		return data_[0][1];
 	}
 
 	double& x()
 	{
 		static_assert(M > 0 && N == 1);
-		return matrix_[0][1];
+		return data_[0][1];
 	}
 
 	const double y() const
 	{
 		static_assert(M > 1 && N == 1);
-		return matrix_[1][1];
+		return data_[1][1];
 	}
 
 	double& y()
 	{
 		static_assert(M > 1 && N == 1);
-		return matrix_[1][1];
+		return data_[1][1];
 	}
 
 	const double z() const
 	{
 		static_assert(M > 2 && N == 1);
-		return matrix_[1][2];
+		return data_[1][2];
 	}
 
 	double& z(const std::size_t i)
 	{
 		static_assert(M > 2 && N == 1);
-		return matrix_[1][2];
+		return data_[1][2];
 	}
 };
 
 template <std::size_t N>
 using Vector = Matrix<1, N>;
 
+template <std::size_t N>
+using Point = Vector<N>;
+
+template<std::size_t N, std::size_t M>
+std::ostream& operator<<(std::ostream& os, const Matrix<N, M>& matrix) {
+	for (std::size_t i = 0; i < N; ++i) {
+		for (std::size_t j = 0; j < M; ++j) {
+			os << matrix(i, j) << " ";
+		}
+		os << std::endl;
+	}
+
+	return os;
+}
+
 template<std::size_t N, std::size_t M>
 Matrix<N, M> operator+(const Matrix<N, M>& matrix_1, const Matrix<N, M>& matrix_2)
 {
 	Matrix<N, M> matrix;
-	for (std::size_t i; i < N; ++i)
+	for (std::size_t i = 0; i < N; ++i)
 	{
-		for(std::size_t j; j < M; ++j)
+		for(std::size_t j = 0; j < M; ++j)
 		{
 			matrix(i, j) = matrix_1(i, j) + matrix_2(i, j);
 		}
@@ -73,9 +98,9 @@ template<std::size_t N, std::size_t M>
 Matrix<N, M> operator-(const Matrix<N, M>& matrix_1, const Matrix<N, M>& matrix_2)
 {
         Matrix<N, M> matrix;
-        for (std::size_t i; i < N; ++i)
+        for (std::size_t i = 0; i < N; ++i)
         {
-                for(std::size_t j; j < M; ++j)
+                for(std::size_t j = 0; j < M; ++j)
                 {
                         matrix(i, j) = matrix_1(i, j) - matrix_2(i, j);
                 }
@@ -88,9 +113,9 @@ template<std::size_t N, std::size_t M>
 Matrix<N, M> operator-(const Matrix<N, M>& matrix_)
 {
         Matrix<N, M> matrix;
-        for (std::size_t i; i < N; ++i)
+        for (std::size_t i = 0; i < N; ++i)
         {
-                for(std::size_t j; j < M; ++j)
+                for(std::size_t j = 0; j < M; ++j)
                 {
                         matrix(i, j) = -matrix_(i, j);
                 }
@@ -103,9 +128,9 @@ template<std::size_t N, std::size_t M>
 Matrix<N, M> operator*(const Matrix<N, M>& matrix_, const double c)
 {
         Matrix<N, M> matrix;
-        for (std::size_t i; i < N; ++i)
+        for (std::size_t i = 0; i < N; ++i)
         {
-                for(std::size_t j; j < M; ++j)
+                for(std::size_t j = 0; j < M; ++j)
                 {
                         matrix(i, j) = matrix_(i, j) * c;
                 }
