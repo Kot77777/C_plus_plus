@@ -23,7 +23,13 @@ public:
 
 	std::array<double,  M> operator[](const std::size_t i) const {return data_[i];}
 	std::array<double,  M>& operator[](const std::size_t i) {return data_[i];}
-	
+
+	void setColumn(const Matrix<1, N>& r, std::size_t i) {
+		for (std::size_t j = 0; j < N; ++j) {
+			if (i == j) {data_[j] = r[0];}
+		}
+	}
+
 	const double x() const
 	{
 		static_assert(M > 0 && N == 1);
@@ -73,7 +79,7 @@ std::ostream& operator<<(std::ostream& os, const Matrix<N, M>& matrix) {
 		for (std::size_t j = 0; j < M; ++j) {
 			os << matrix(i, j) << " ";
 		}
-		os << std::endl;
+		os << '\n';
 	}
 
 	return os;
@@ -211,7 +217,7 @@ double determinant(const Matrix<N, N>& matrix)
 	double total = 0;
 	for(std::size_t i = 0; i < N; ++i)
 	{
-		total += pow_minus1(i) * matrix(i, 0) * determinant(minor(i, matrix));
+		total += ((i % 2 == 0) ? 1 : -1) * matrix(i, 0) * determinant(minor(i, matrix));
 	}
 	
 	return total;

@@ -41,13 +41,8 @@ bool point_in_simplex(const Point<N>& point, const Simplex<N>& simplex)
 	double total = 0;
 	for (std::size_t i = 0; i < N; ++i)
 	{
-		x[i] = determinants[i] / det;
-		total += x[i];
-	}
-
-	for (std::size_t i = 0; i < N; ++i)
-	{
-		if (x[i] < 0) {return false;}
+		if (determinants[i] / det < 0) {return false;}
+		total += determinants[i] / det;
 	}
 
 	return total <= 1 ? true : false;

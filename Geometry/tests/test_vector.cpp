@@ -2,12 +2,63 @@
 #include "geometry/primitives/Matrix.h"
 #include "geometry/intersections/Point_in_simplex.h"
 
+class S {
+	int x;
+public:
+
+	S(const int x_) : x(x_){}
+	//int& operator*() {return x;}
+
+	int& operator->() {return x;}
+	const int operator->() const {return x;}
+};
+class ScopedPointer {
+	S *ptr_;
+public:
+	ScopedPointer(S *ptr = nullptr) : ptr_(ptr){}
+	~ScopedPointer(){delete ptr_;}
+
+	//S& operator*() {return *ptr_;}
+	//const S& operator*() const {return *ptr_;}
+
+	S* operator->() {return ptr_;}
+	const S* operator->() const {return  ptr_;}
+};
+
+
 TEST(VECTOR, CREATE_VECTOR)
 {
-	std::array<std::array<double, 3>, 1> matrix1 = {{{1, 2, 3}}};
+
+	ScopedPointer p{new S(4)};
+	//std::cout << p->x << std::endl;
+
+
+	int b = 5, c = 0;
+	int &a = b;
+	int *d = &b;
+
+	int *&g = d;
+
+
+	int *f = &a;
+
+	std::cout << &a << " " << &b <<  " " << &d << " " <<  &g << " " << f << std::endl;
+
+	int x[5];
+	//&x == x;
+	int (*z)[5] = &x;
+	std::cout << *x << " " << x << " " << &(x[5]) << std::endl;
+	std::cout << z << " " << **z ;
+
+	int l = 1;
+	int &k = l;
+
+
+
+	/*std::array<std::array<double, 3>, 1> matrix1 = {{{1, 2, 3}}};
 	//Matrix<1, 3> matrix_1{matrix1};
 	Vector<3> vec{matrix1};
-	std::cout << vec.x() << std::endl;
+	std::cout << vec.x() << std::endl;*/
 	
 	std::array<std::array<double, 3>, 3> matrix2 = {{{3, 2, 5}, {7, 8, 6}, {11, 3, 6}}};
 	Matrix<3, 3> matrix_2{matrix2};
