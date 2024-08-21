@@ -2,34 +2,28 @@
 #define METAPROGA_CONTAIN_H
 #include <typeinfo>
 
-template<typename A, typename ... T>
+template<typename ... T>
 struct Pack{
 
-    template<typename B>
-    bool next_type()
-    {
-        if constexpr ((sizeof ... (T)) != 0) {
-            if(typeid(A).name() == typeid(B).name()) {
-                return true;
-            }
-            Pack<T...> f;
-            return f.template next_type<B>();
-        }
-        else {
-            if(typeid(A).name() == typeid(B).name()) {
-                return true;
-            }
-            else{return false;}
-        }
+    constexpr int size() {
+        return (sizeof ... (T));
+    }
+
+    constexpr std::array<const char*, sizeof ... (T)> initialize(){
+        return {typeid(T).name() ...};
     }
 };
 
 template<typename Pack, typename item>
-bool contain()
+constexpr bool contain()
 {
     Pack a;
-    bool type = a.template next_type<item>();
-    return type;
+    constexpr int lenth = a.size();
+    std::array<const char*, lenth> type = a.initialize();
+    for (int i = 0; i < lenth; ++i) {
+        if (typeid(item).name() == type[i]){return true;}
+    }
+    return false;
 }
 
 #endif
