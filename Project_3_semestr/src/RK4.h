@@ -5,11 +5,12 @@
 
 class RotationRHS {
     Eigen::Matrix3d J_;
-    Eigen::Vector3d M_;
     Eigen::Matrix3d JInv_;
+    double F_;
+    double l_;
 
 public:
-    RotationRHS(const Eigen::Matrix3d &J, const Eigen::Vector3d &M) : J_(J), M_(M), JInv_(J.inverse()) {
+    RotationRHS(const Eigen::Matrix3d &J, const double F, const double l) : J_(J), JInv_(J.inverse()), F_(F), l_(l) {
     }
 
     using ArgType = double;
@@ -24,8 +25,13 @@ public:
         const Eigen::Quaterniond q(Vec[0], Vec[1], Vec[2], Vec[3]);
         const Eigen::Quaterniond w_quat(0, Vec[4], Vec[5], Vec[6]);
 
+        const Eigen::Vector3d l_I = adjoint_EI(Eigen::Vector3d{0, 0, l_}, q);
+        const Eigen::Vector3d mg_I{0, 0, -F_};
+        const Eigen::Vector3d M_I = l_I.cross(mg_I);
+        const Eigen::Vector3d M = adjoint_IE(M_I, q);
+
         const Eigen::Quaterniond q_deriv = q * w_quat;
-        const Eigen::Vector3d param = M_ - Vec.segment<3>(4).cross((J_ * Vec.segment<3>(4)));
+        const Eigen::Vector3d param = M - Vec.segment<3>(4).cross((J_ * Vec.segment<3>(4)));
         const Eigen::Vector3d w_deriv = JInv_ * param;
 
         return VecType{
@@ -34,7 +40,19 @@ public:
         };
     }
 
-    static void normalize(VecType &v) {
+    static Eigen::Vector3d adjoint_EI(const Eigen::Vector3d& v_E, const Eigen::Quaterniond& q) {
+        const Eigen::Quaterniond v_quat(0, v_E[0], v_E[1], v_E[2]);
+        const Eigen::Quaterniond v_I =  Eigen::Quaterniond{q * v_quat} * q.conjugate();
+        return Eigen::Vector3d{v_I.x(), v_I.y(), v_I.z()};
+    }
+
+    static Eigen::Vector3d adjoint_IE(const Eigen::Vector3d& v_I, const Eigen::Quaterniond& q) {
+        const Eigen::Quaterniond v_quat(0, v_I[0], v_I[1], v_I[2]);
+        const Eigen::Quaterniond v_E =  Eigen::Quaterniond{q.conjugate() * v_quat} * q;
+        return Eigen::Vector3d{v_E.x(), v_E.y(), v_E.z()};
+    }
+
+    static void normalize(VecType &v){
         const Eigen::Vector<double, 4> quat = v.segment<4>(0) / v.segment<4>(0).norm();
         v.segment<4>(0) = quat;
     }
