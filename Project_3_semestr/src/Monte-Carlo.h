@@ -19,6 +19,8 @@ struct cond
   std::vector<double> delta_r;
   std::vector<double> delta_v;
 
+  double delta_r_norm;
+
   cond(const std::vector<double> R2)
       : R2_(R2)
   {
@@ -38,6 +40,8 @@ struct cond
       V2_[1] - V1_[1],
       V2_[2] - V2_[2]
     };
+
+    delta_r_norm = std::sqrt(delta_r[0] * delta_r[0] + delta_r[1] * delta_r[1] + delta_r[2] * delta_r[2]);
   }
 };
 
