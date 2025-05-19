@@ -1,6 +1,8 @@
 #ifndef PEREVOD_H
 #define PEREVOD_H
 
+#include "Type.h"
+
 Eigen::Vector3d adjoint_EI(const Eigen::Vector3d &v_E, const Eigen::Quaterniond &q) {
     const Eigen::Quaterniond v_quat(0, v_E[0], v_E[1], v_E[2]);
     const Eigen::Quaterniond v_I = Eigen::Quaterniond{q * v_quat} * q.conjugate();
