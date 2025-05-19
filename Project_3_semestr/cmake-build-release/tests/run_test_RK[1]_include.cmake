@@ -1,5 +1,0 @@
-if(EXISTS "/home/kostya/Repositories/C_plus_plus/Project_3_semestr/cmake-build-release/tests/run_test_RK[1]_tests.cmake")
-  include("/home/kostya/Repositories/C_plus_plus/Project_3_semestr/cmake-build-release/tests/run_test_RK[1]_tests.cmake")
-else()
-  add_test(run_test_RK_NOT_BUILT run_test_RK_NOT_BUILT)
-endif()
