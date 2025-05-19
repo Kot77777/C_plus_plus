@@ -43,6 +43,7 @@ struct cond
 
     delta_r_norm = std::sqrt(delta_r[0] * delta_r[0] + delta_r[1] * delta_r[1] + delta_r[2] * delta_r[2]);
   }
+  cond() = default;
 };
 
 
